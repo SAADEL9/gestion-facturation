@@ -1,0 +1,28 @@
+{
+  "clients": {
+    "client_001": {
+      "nom": "Mohamed Alami",
+      "email": "m.alami@gmail.com",
+      "tel": "0661234567",
+      "adresse": "Casablanca, Maarif"
+    }
+  },
+  "factures": {
+    "facture_001": {
+      "numero": "FAC-001",
+      "date_creation": "2026-03-31",
+      "client_id": "client_001",
+      "articles": [
+        { "description": "Prestation web", "quantite": 1, "prix_unitaire": 1000 }
+      ],
+      "total_ht": 1000,
+      "tva": 200,
+      "total_ttc": 1200,
+      "statut": "en_attente",
+      "date_depot": "",
+      "date_encaissement": "",
+      "type_virement": "",
+      "validated_by_admin": false
+    }
+  }
+}
