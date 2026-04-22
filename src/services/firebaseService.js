@@ -1,15 +1,14 @@
-// Import the functions you need from the SDKs you need
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { ref, set, get } from "firebase/database";
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBBtE30FUQJer853dlhAWaJJA5yaB6lIVs",
-  authDomain: "facturation-cb06a.firebaseapp.com",
-  projectId: "facturation-cb06a",
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
   storageBucket: "facturation-cb06a.firebasestorage.app",
   messagingSenderId: "797627921129",
   appId: "1:797627921129:web:3a37dd5b6cd9e7ab76b678",
@@ -19,3 +18,27 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+export const auth = getAuth(app);
+export const db = getDatabase(app);
+export const registerUser = async (nom, email, password) => {
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const uid = userCredential.user.uid;
+
+  // Sauvegarde du profil dans Firebase Realtime Database
+  await set(ref(db, `users/${uid}`), {
+    nom,
+    email,
+    role: "user", // tout le monde commence en tant que user
+    createdAt: new Date().toISOString()
+  });
+
+  return userCredential.user;
+};
+export const getUserRole = async (uid) => {
+  const snapshot = await get(ref(db, `users/${uid}`));
+  if (snapshot.exists()) {
+    return snapshot.val().role;
+  }
+  return null;
+};
