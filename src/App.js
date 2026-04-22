@@ -4,6 +4,7 @@ import './App.css';
 import AjouterArticle from './pages/article/AjouterArticle';
 import Dashboard from './pages/Dashboard';
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/auth/LoginPage';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Link to="/">Accueil</Link>
         
         <Link to="/Dashboard">Dashboard</Link>
+        <Link to="/login">login</Link>
       </nav>
 
       {/* Le contenu qui change selon l'URL */}
@@ -20,6 +22,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         
         <Route path="/Dashboard" element={<Dashboard />} />
+         <Route path="/login" element={<LoginPage />} />
         
         {/* Route 404 - Si l'URL n'existe pas */}
         <Route path="*" element={<h1>Page non trouvée !</h1>} />

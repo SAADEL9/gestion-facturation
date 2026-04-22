@@ -17,3 +17,11 @@ export const registerSchema = Yup.object({
     .oneOf([Yup.ref("password")], "Les mots de passe ne correspondent pas")
     .required("La confirmation est obligatoire")
 });
+export const LoginSchema =Yup.object({
+    email: Yup.string()
+        .email("Email invalide")
+        .required("L'email est obligatoire"),
+    password: Yup.string()
+        .min(6, "Minimum 6 caractères")
+        .required("Le mot de passe est obligatoire")
+});
